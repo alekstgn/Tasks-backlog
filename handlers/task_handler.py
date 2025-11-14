@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import os
 
-from aiogram import Router
+from aiogram import F, Router
 from aiogram.filters import Command
 from aiogram.fsm.context import FSMContext
 from aiogram.fsm.state import State, StatesGroup
@@ -39,9 +39,10 @@ class TaskStates(StatesGroup):
 
 
 @router.message(Command("add"))
+@router.message(F.text == "➕ Добавить задачу")
 async def cmd_add_task(message: Message, state: FSMContext) -> None:
     """
-    Обработчик команды /add.
+    Обработчик команды /add и кнопки "➕ Добавить задачу".
     Запрашивает у пользователя текст задачи.
 
     Логирует запуск команды на уровне INFO.
@@ -89,9 +90,10 @@ async def process_task_text(message: Message, state: FSMContext) -> None:
 
 
 @router.message(Command("list"))
+@router.message(F.text == "📋 Список задач")
 async def cmd_list_tasks(message: Message) -> None:
     """
-    Обработчик команды /list.
+    Обработчик команды /list и кнопки "📋 Список задач".
     Выводит все задачи пользователя из базы данных.
 
     Если задач нет, выводит соответствующее сообщение.
@@ -128,9 +130,10 @@ async def cmd_list_tasks(message: Message) -> None:
 
 
 @router.message(Command("list_csv"))
+@router.message(F.text == "📊 CSV выгрузка")
 async def cmd_list_csv(message: Message) -> None:
     """
-    Обработчик команды /list_csv.
+    Обработчик команды /list_csv и кнопки "📊 CSV выгрузка".
     Генерирует CSV-файл с задачами и отправляет пользователю.
 
     Логирует генерацию и отправку CSV на уровне INFO.
